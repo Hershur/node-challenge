@@ -13,7 +13,6 @@ RUN wget -O $INIT_SRC "$INIT_REPO/releases/download/v1.2.2/dumb-init_1.2.2_amd64
     mkdir /app && chown node:node /app
 
 WORKDIR /app
-USER node
 EXPOSE 9001
 
 # Manifest Cache Layer
@@ -56,6 +55,9 @@ FROM test AS production
 
 RUN rm -fr node_modules && \
     yarn install --production --frozen-lockfile
+
+USER node
+
 
 ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
 CMD ["node", "index.js"]

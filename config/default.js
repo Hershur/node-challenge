@@ -3,9 +3,11 @@ const path = require('path');
 
 module.exports = {
   db: {
-    host: '0.0.0.0',
+    host: 'postgresdb',
     port: 5432,
-    database: 'challenge',
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
+    database: process.env.POSTGRES_DB,
   },
   debug: {
     stackSize: 4,
@@ -21,5 +23,8 @@ module.exports = {
   shutdown: {
     appKill: 1000,
     serverClose: 100,
+  },
+  auth: {
+    jwtSecret: '',
   },
 };

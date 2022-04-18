@@ -18,6 +18,9 @@ interface ConfigDefinition {
         appKill: number
         serverClose: number
     }
+    auth: {
+        jwtSecret: string
+    }
 }
 
 declare module 'config' {
