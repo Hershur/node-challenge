@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
   db: {
-    host: 'postgresdb',
+    host: '0.0.0.0',
     port: 5432,
     user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
