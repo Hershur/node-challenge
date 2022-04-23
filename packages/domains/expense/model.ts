@@ -22,7 +22,7 @@ export async function getExpenseDetails(expenseId): Promise<Expense> {
   return formatExpense(rawExpense);
 }
 
-export async function getUserExpenseDetails(userId): Promise<UserExpense> {
+export async function getUserExpensesDetails(userId): Promise<UserExpense> {
   if (!userId) {
     throw BadRequest('userId property is missing.');
   }

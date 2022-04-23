@@ -7,7 +7,8 @@ const publicFields = [
   'merchant_name',
   'date_created',
 ];
-const publicFieldsExpense = ['full_name', ...publicFields.filter((f) => !['id'].includes(f))];
+
+const publicFieldsExpense = ['full_name', ...publicFields];
 
 export function capitalizeEachWord(word) {
   return word.replace(/\b\w/g, (c) => c.toUpperCase());
