@@ -58,14 +58,51 @@ The command above will run the following test suites sequentially:
 Happy hacking 😁!
 
 
+# Thought Process
 
-curl --request POST \
-  --header 'content-type: application/json' \
-  --url http://localhost:9001/graphql \
-  --data '{"query":"query {\n    expense(expenseId: \"f20866f9-7d46-45f2-822c-4b568e216a13\")\n}"}'
+- __Created *docker-compose.yml* file to configure the postgres and app server images__
+    - when the postgres db container is spinned up, postgres creates the 'challenge' database from the enviroment variable __*POSTGRES_DB=challenge*__
+    - on initialization of the database, postgres also runs the __*dump.sql*__ scripts mounted on the container as defined in the *docker-compose.yml* file which creates the __*expenses*__ and __*users*__ table in the __*challenge*__ db and loads the required data into each table respectively (note: postgres will only initiliaze the db if no db  exists)
+    ``` ./dump.sql:/docker-entrypoint-initdb.d/dump.sql ```
+    - *pgdata* is also mounted on the container to persist postgres db data 
+    ``` ./pgdata:/var/lib/postgresql/data ```
+    - used __*docker-compose up*__ to spin up both containers (postgresdb and app server) or __*docker-compose up --build*__ to rebuild
 
 
-curl --request POST \
-  --header 'content-type: application/json' \
-  --url http://localhost:9001/graphql \
-  --data '{"query":"query {\n    userExpenses(userId: \"da140a29-ae80-4f0e-a62d-6c2d2bc8a474\")\n}"}'
+- __Implemented ```*/get-expense*``` and ```*/get-user-expenses*``` endpoints__
+    -  ```*/get-expense*``` returns a particular expense by id
+    
+    ``` 
+        http://localhost:9001/expense/v1/get-expense?expenseId=3e920f54-49df-4d0b-b11b-e6f08e3a2dca 
+    ```   
+    - ```*/get-user-expenses*``` returns list of expenses tied to a particular user
+    
+    ```
+        http://localhost:9001/expense/v1/get-user-expenses?userId=da140a29-ae80-4f0e-a62d-6c2d2bc8a474
+    ```   
+    
+- __Added GraphQL support__
+    - Implemented GraphQL endpoint ```http://localhost:9001/graphql``` wrapped around the existing  ```*/get-expense*``` and ```*/get-user-expenses*``` REST APIs
+    - Implemented *__expense__* resolver to fetch expense details by given id
+    
+    ```
+    
+        curl --request POST \
+          --header 'content-type: application/json' \
+          --url http://localhost:9001/graphql \
+          --data '{"query":"query {    expense(expenseId: \"f20866f9-7d46-45f2-822c-4b568e216a13\") }"}'
+          
+    ```
+    
+    - Implemented *__userExpenses__* resolver to fetch expenses of a specific user
+    
+    ```
+    
+        curl --request POST \
+          --header 'content-type: application/json' \
+          --url http://localhost:9001/graphql \
+          --data '{"query":"query {    userExpenses(userId: \"da140a29-ae80-4f0e-a62d-6c2d2bc8a474\") }"}'
+    
+    ```
+
+
