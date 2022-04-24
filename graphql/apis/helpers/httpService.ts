@@ -4,7 +4,7 @@ import https from 'https';
 
 async function get(url) {
   const server = config.https?.enabled ? https : http;
-  const baseUrl = config.https?.enabled ? 'https://localhost:9001' : 'http://localhost:9001';
+  const baseUrl = config.https?.enabled ? `https://${config.host}` : `http://${config.host}`;
   const newUrl = url.startsWith('http') ? url : baseUrl.concat(url);
 
   const result = await new Promise((resolve, reject) => {
