@@ -1,8 +1,9 @@
 import { ApiError } from '@nc/utils/errors';
 import { Router } from 'express';
 import { to } from '@nc/utils/async';
+import { Expense, UserExpense } from '../types';
 import { getExpenseDetails, getUserExpensesDetails } from '../model';
-import { secureTrimExpense, secureTrimUserExpense } from '../formatter';
+import { publicFieldsExpense, publicFieldsUserExpense, secureTrim } from '../formatter';
 
 export const router = Router();
 
@@ -17,7 +18,7 @@ router.get('/get-expense', async (req, res, next) => {
     return res.json({});
   }
 
-  return res.json(JSON.parse(secureTrimExpense(expenseDetails)));
+  return res.json(JSON.parse(secureTrim<Expense>(expenseDetails, publicFieldsExpense)));
 })
   .get('/get-user-expenses', async (req, res, next) => {
     const [expenseError, userExpenseDetails] = await to(getUserExpensesDetails(req.query?.userId));
@@ -30,5 +31,5 @@ router.get('/get-expense', async (req, res, next) => {
       return res.json({});
     }
 
-    return res.json(JSON.parse(secureTrimUserExpense(userExpenseDetails)));
+    return res.json(JSON.parse(secureTrim<UserExpense[]>(userExpenseDetails, publicFieldsUserExpense)));
   });

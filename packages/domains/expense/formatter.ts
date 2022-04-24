@@ -1,6 +1,6 @@
 import { Expense, UserExpense } from './types';
 
-const publicFields = [
+export const publicFieldsExpense = [
   'amount',
   'currency',
   'status',
@@ -8,18 +8,14 @@ const publicFields = [
   'date_created',
 ];
 
-const publicFieldsExpense = ['full_name', ...publicFields];
+export const publicFieldsUserExpense = ['full_name', ...publicFieldsExpense];
 
 export function capitalizeEachWord(word) {
   return word.replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-export function secureTrimExpense(expense: Expense): string {
-  return JSON.stringify(expense, publicFields);
-}
-
-export function secureTrimUserExpense(expense: UserExpense): string {
-  return JSON.stringify(expense, publicFieldsExpense);
+export function secureTrim<T>(expense: T, fields: string[]): string {
+  return JSON.stringify(expense, fields);
 }
 
 export function formatExpense(rawExpense): Expense {
@@ -34,7 +30,7 @@ export function formatExpense(rawExpense): Expense {
   };
 }
 
-export function formatUserExpense(rawExpense): UserExpense {
+export function formatUserExpenses(rawExpense): UserExpense[] {
   return rawExpense.map((expense) => (
     {
       user_id: expense.user_id,

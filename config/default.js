@@ -27,4 +27,5 @@ module.exports = {
   auth: {
     jwtSecret: '',
   },
+  environment: process.env.NODE_ENV,
 };

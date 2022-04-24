@@ -56,3 +56,16 @@ The command above will run the following test suites sequentially:
 
 
 Happy hacking 😁!
+
+
+
+curl --request POST \
+  --header 'content-type: application/json' \
+  --url http://localhost:9001/graphql \
+  --data '{"query":"query {\n    expense(expenseId: \"f20866f9-7d46-45f2-822c-4b568e216a13\")\n}"}'
+
+
+curl --request POST \
+  --header 'content-type: application/json' \
+  --url http://localhost:9001/graphql \
+  --data '{"query":"query {\n    userExpenses(userId: \"da140a29-ae80-4f0e-a62d-6c2d2bc8a474\")\n}"}'
