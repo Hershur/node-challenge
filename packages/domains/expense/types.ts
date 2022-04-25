@@ -1,3 +1,5 @@
+import { Field, InputType } from 'type-graphql';
+
 export interface Expense {
     id: string
     merchant_name: string
@@ -21,4 +23,18 @@ export interface PaginatedExpenses {
     recordsDisplayed: number
     totalRecords: number
     data: Expense[]
+}
+@InputType()
+export class PaginationArgs {
+    @Field(() => String)
+    page: string;
+
+    @Field(() => String)
+    size: string;
+
+    @Field(() => String)
+    sortBy: string;
+
+    @Field(() => String)
+    filter: string;
 }

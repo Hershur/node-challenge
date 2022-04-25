@@ -111,6 +111,18 @@ Happy hacking 😁!
           --data '{"query":"query {    userExpenses(userId: \"da140a29-ae80-4f0e-a62d-6c2d2bc8a474\") }"}'
     
     ```
+    
+     - Implemented *__allExpenses__* resolver to fetch all expenses with a maximum of 10 records per page
+    
+    ```
+    
+        curl --request POST \
+          --header 'content-type: application/json' \
+          --url http://localhost:9001/graphql \
+          --data '{"query":"query {\n    allExpenses (\n        paginationOptions: {\n            page: \"1\",\n            size: \"5\",\n            filter: \"pending\"\n            sortBy: \"merchant_name\"\n        }\n    )\n}"}'
+
+    ```
+
 
 
 

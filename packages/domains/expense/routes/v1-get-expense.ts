@@ -36,7 +36,7 @@ router.get('/get-expense', async (req, res, next) => {
   .get('/get-all-expenses', async (req, res, next) => {
     const buildQueries = {
       page: req.query?.page?.toString(),
-      size: req.query?.size && parseInt(req.query?.size.toString(), 10) > 10 ? 10 : parseInt(req.query?.size.toString(), 10),
+      size: !req.query?.size || parseInt(req.query?.size.toString(), 10) > 10 ? 10 : parseInt(req.query?.size.toString(), 10),
       sortBy: req.query?.sortBy?.toString()?.trim(),
       filter: req.query?.filter,
     };

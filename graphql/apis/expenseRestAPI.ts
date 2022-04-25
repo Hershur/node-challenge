@@ -13,3 +13,10 @@ export async function userExpensesDetails(userId) {
 
   return userExpensesResult;
 }
+
+export async function getAllExpensesDetails({ page, size, sortBy, filter }) {
+  const endpoint = `/expense/v1/get-all-expenses?page=${page}&size=${size}&sortBy=${sortBy}&filter=${filter}`;
+  const allExpensesResult = await httpService.get(endpoint);
+
+  return allExpensesResult;
+}
