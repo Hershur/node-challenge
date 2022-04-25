@@ -14,7 +14,7 @@ export function capitalizeEachWord(word) {
   return word.replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-export function secureTrim<T>(expense: T, fields: string[]): string {
+export function secureTrim<T>(expense: T, fields?: string[]): string {
   return JSON.stringify(expense, fields);
 }
 
@@ -28,6 +28,19 @@ export function formatExpense(rawExpense): Expense {
     date_created: rawExpense.date_created,
     status: rawExpense.status,
   };
+}
+
+export function formatExpenses(rawExpense): Expense[] {
+  return rawExpense.map((expense) => (
+    {
+      id: expense.id,
+      merchant_name: expense.merchant_name,
+      amount: `${expense.currency.toUpperCase()} ${(+expense.amount_in_cents / 100).toLocaleString()}`,
+      currency: expense.currency.toUpperCase(),
+      user_id: expense.user_id,
+      date_created: expense.date_created,
+      status: expense.status,
+    }));
 }
 
 export function formatUserExpenses(rawExpense): UserExpense[] {

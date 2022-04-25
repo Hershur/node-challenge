@@ -69,16 +69,23 @@ Happy hacking 😁!
     - used __*docker-compose up*__ to spin up both containers (postgresdb and app server) or __*docker-compose up --build*__ to rebuild
 
 
-- __Implemented ```*/get-expense*``` and ```*/get-user-expenses*``` endpoints__
+- __Implemented ```*/get-expense*```,  ```*/get-user-expenses*``` and ```*/get-all-expenses*``` endpoints__
     -  ```*/get-expense*``` returns a particular expense by id
-    
+
     ``` 
         http://localhost:9001/expense/v1/get-expense?expenseId=3e920f54-49df-4d0b-b11b-e6f08e3a2dca 
     ```   
+    
     - ```*/get-user-expenses*``` returns list of expenses tied to a particular user
     
     ```
         http://localhost:9001/expense/v1/get-user-expenses?userId=da140a29-ae80-4f0e-a62d-6c2d2bc8a474
+    ```   
+     
+    - ```*/get-all-expenses*``` returns all the expenses with a maximum of 10 records per page, filter records based on merchant_name, currency and status, sort records based on  merchant_name,currency,status,amount_in_cents and date_created with __comma-separated values as seen in the example url below__
+    
+    ```
+        http://localhost:9001/expense/v1/get-all-expenses?page=1&size=5&sortBy=merchant_name,amount_in_cents&filter=pending
     ```   
     
 - __Added GraphQL support__
@@ -104,5 +111,6 @@ Happy hacking 😁!
           --data '{"query":"query {    userExpenses(userId: \"da140a29-ae80-4f0e-a62d-6c2d2bc8a474\") }"}'
     
     ```
+
 
 

@@ -13,3 +13,12 @@ type CleanedExpense = Omit<Expense, 'id' >;
 export interface UserExpense extends CleanedExpense {
     full_name: string
 }
+
+export interface PaginatedExpenses {
+    page: number
+    size: number
+    sortBy?: string
+    recordsDisplayed: number
+    totalRecords: number
+    data: Expense[]
+}
