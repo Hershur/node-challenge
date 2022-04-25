@@ -11,7 +11,7 @@ export const publicFieldsExpense = [
 export const publicFieldsUserExpense = ['full_name', ...publicFieldsExpense];
 
 export function capitalizeEachWord(word) {
-  return word.replace(/\b\w/g, (c) => c.toUpperCase());
+  return (word + '').replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 export function secureTrim<T>(expense: T, fields?: string[]): string {
@@ -35,7 +35,7 @@ export function formatExpenses(rawExpense): Expense[] {
     {
       id: expense.id,
       merchant_name: expense.merchant_name,
-      amount: `${expense.currency.toUpperCase()} ${(+expense.amount_in_cents / 100).toLocaleString()}`,
+      amount: `${expense.currency.toUpperCase()} ${Intl.NumberFormat().format(+expense.amount_in_cents / 100)}`,
       currency: expense.currency.toUpperCase(),
       user_id: expense.user_id,
       date_created: expense.date_created,
@@ -48,7 +48,7 @@ export function formatUserExpenses(rawExpense): UserExpense[] {
     {
       user_id: expense.user_id,
       full_name: capitalizeEachWord(expense.full_name),
-      amount: `${expense.currency.toUpperCase()} ${(+expense.amount_in_cents / 100).toLocaleString()}`,
+      amount: `${expense.currency.toUpperCase()} ${Intl.NumberFormat().format(+expense.amount_in_cents / 100)}`,
       currency: expense.currency.toUpperCase(),
       merchant_name: expense.merchant_name,
       status: expense.status,
